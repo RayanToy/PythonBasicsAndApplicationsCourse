@@ -1,0 +1,1 @@
+print(len(set([id(o) for o in objects])))
