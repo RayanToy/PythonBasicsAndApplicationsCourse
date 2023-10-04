@@ -1,28 +1,15 @@
 '''
 Вам дана последовательность строк.
 
-Выведите строки, содержащие "cat" в качестве подстроки хотя бы два раза.
+Выведите строки, содержащие обратный слеш "**\**﻿".
 
-Примечание:
-
-Считать все строки по одной из стандартного потока ввода вы можете, например, так
-
-import sys
-
-for line in sys.stdin:
-    line = line.rstrip()
-    # process line
 Sample Input:
 
-catcat
-cat and cat
-catac
-cat
-ccaatt
+\w denotes word character
+No slashes here
 Sample Output:
 
-catcat
-cat and cat
+\w denotes word character
 '''
 
 import sys
