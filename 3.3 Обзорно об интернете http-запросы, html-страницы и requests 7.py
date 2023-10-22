@@ -22,3 +22,24 @@ stepic.org
 www.ya.ru
 ya.ru
 '''
+
+
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+
+
+url = input()
+website_names = []
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+links = soup.find_all('a')
+for link in links:
+    href = link.get('href')
+    parsed_url = urlparse(href)
+    website_name = parsed_url.hostname
+    if website_name is not None:
+        website_names.append(website_name)
+for web in sorted(set(website_names)):
+    print(web)
+
