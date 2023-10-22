@@ -1,3 +1,4 @@
+'''
 Вам дано описание наследования классов в формате JSON.
 
 Описание представляет из себя массив JSON-объектов, которые соответствуют классам. У каждого JSON-объекта есть поле name, которое содержит имя класса, и поле parents, которое содержит список имен прямых предков.
@@ -33,3 +34,29 @@ Sample Output:
 A : 3
 B : 1
 C : 2
+'''
+
+
+import json
+s = json.loads(input())
+Inheritance = {}
+for i in s:
+    Inheritance[i["name"]] = i["parents"]
+Inheritance = {key: Inheritance[key] for key in sorted(Inheritance)}
+
+
+def count_parents(name, parent):
+    if name == parent:
+        return True
+    for child in Inheritance[name]:
+        if count_parents(child, parent):
+            return True
+    return False
+
+
+for name in Inheritance:
+    count = 0
+    for parent in Inheritance:
+        if count_parents(parent, name):
+            count += 1
+    print(f"{name} : {count}")
