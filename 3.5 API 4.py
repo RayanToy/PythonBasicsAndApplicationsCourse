@@ -1,3 +1,4 @@
+'''
 В этой задаче вам необходимо воспользоваться API сайта artsy.net
 
 API проекта Artsy предоставляет информацию о некоторых деятелях искусства, их работах, выставках.
@@ -47,3 +48,32 @@ j = json.loads(r.text)
 Пример входных данных: 4d8b92b34eb68a1b2c0003f4 537def3c139b21353f0006a6 4e2ed576477cc70001006f99
 
 Пример выходных данных: Abbott Mary Warhol Andy Abbas Hamra
+'''
+
+import requests
+import json
+
+client_id = '799b62ae0720f0d75570'
+client_secret = 'e35c977afaca7cfc765e75c5ea16e40c'
+
+r = requests.post("https://api.artsy.net/api/tokens/xapp_token",
+                  data={
+                      "client_id": client_id,
+                      "client_secret": client_secret
+                  })
+
+j = json.loads(r.text)
+artist = {}
+token = j["token"]
+headers = {"X-Xapp-Token" : token}
+with open('dataset_24476_4.txt', 'r', encoding='utf-8') as f:
+    data = f.read()
+    lines = data.strip().split('\n')
+for line in lines:
+    r = requests.get(f"https://api.artsy.net/api/artists/{line}", headers=headers)
+    j = json.loads(r.text)
+    artist[j['sortable_name']] = int(j['birthday'])
+sorted_artist = sorted(artist.items(), key=lambda x: (x[1], x[0]))
+for artist in sorted_artist:
+    print(artist[0])
+print('\n')
